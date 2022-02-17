@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TV.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TVStoreContainer">
+    <EntitySet Name="kanal" EntityType="TV.Store.kanal" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="yayin" EntityType="TV.Store.yayin" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sorumlu" EntityType="TV.Store.sorumlu" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="kanalyayin" Association="TV.Store.kanalyayin">
+      <End Role="kanal" EntitySet="kanal" />
+      <End Role="yayin" EntitySet="yayin" />
+    </AssociationSet>
+    <AssociationSet Name="yayinsorumlu" Association="TV.Store.yayinsorumlu">
+      <End Role="yayin" EntitySet="yayin" />
+      <End Role="sorumlu" EntitySet="sorumlu" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="kanal">
+    <Key>
+      <PropertyRef Name="kanalid" />
+    </Key>
+    <Property Name="kanalid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kanaladi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ciro" Type="decimal" Nullable="false" />
+    <Property Name="adres" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="reyting" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="yayin">
+    <Key>
+      <PropertyRef Name="yayinid" />
+    </Key>
+    <Property Name="yayinid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="yayinadi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="yayintarihi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="reyting" Type="float" Nullable="false" />
+    <Property Name="kanalid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sorumlu">
+    <Key>
+      <PropertyRef Name="sorumluid" />
+    </Key>
+    <Property Name="sorumluid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="adsoyad" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="gorevi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="maas" Type="decimal" Nullable="false" />
+    <Property Name="gorevsayisi" Type="int" Nullable="false" />
+    <Property Name="yayinid" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="kanalyayin">
+    <End Role="kanal" Type="TV.Store.kanal" Multiplicity="1" />
+    <End Role="yayin" Type="TV.Store.yayin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="kanal">
+        <PropertyRef Name="kanalid" />
+      </Principal>
+      <Dependent Role="yayin">
+        <PropertyRef Name="kanalid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="yayinsorumlu">
+    <End Role="yayin" Type="TV.Store.yayin" Multiplicity="1" />
+    <End Role="sorumlu" Type="TV.Store.sorumlu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="yayin">
+        <PropertyRef Name="yayinid" />
+      </Principal>
+      <Dependent Role="sorumlu">
+        <PropertyRef Name="yayinid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TV" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TVContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="kanal" EntityType="TV.kanal" />
+          <EntitySet Name="yayin" EntityType="TV.yayin" />
+          <EntitySet Name="sorumlu" EntityType="TV.sorumlu" />
+          <AssociationSet Name="kanalyayin" Association="TV.kanalyayin">
+            <End Role="kanal" EntitySet="kanal" />
+            <End Role="yayin" EntitySet="yayin" />
+          </AssociationSet>
+          <AssociationSet Name="yayinsorumlu" Association="TV.yayinsorumlu">
+            <End Role="yayin" EntitySet="yayin" />
+            <End Role="sorumlu" EntitySet="sorumlu" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="kanal">
+          <Key>
+            <PropertyRef Name="kanalid" />
+          </Key>
+          <Property Name="kanalid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kanaladi" Type="String" Nullable="false" />
+          <Property Name="ciro" Type="Decimal" Nullable="false" />
+          <Property Name="adres" Type="String" Nullable="false" />
+          <Property Name="reyting" Type="Double" Nullable="false" />
+          <NavigationProperty Name="yayin" Relationship="TV.kanalyayin" FromRole="kanal" ToRole="yayin" />
+        </EntityType>
+        <EntityType Name="yayin">
+          <Key>
+            <PropertyRef Name="yayinid" />
+          </Key>
+          <Property Name="yayinid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yayinadi" Type="String" Nullable="false" />
+          <Property Name="yayintarihi" Type="String" Nullable="false" />
+          <Property Name="reyting" Type="Double" Nullable="false" />
+          <NavigationProperty Name="kanal" Relationship="TV.kanalyayin" FromRole="yayin" ToRole="kanal" />
+          <Property Name="kanalid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="sorumlu" Relationship="TV.yayinsorumlu" FromRole="yayin" ToRole="sorumlu" />
+        </EntityType>
+        <EntityType Name="sorumlu">
+          <Key>
+            <PropertyRef Name="sorumluid" />
+          </Key>
+          <Property Name="sorumluid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adsoyad" Type="String" Nullable="false" />
+          <Property Name="gorevi" Type="String" Nullable="false" />
+          <Property Name="maas" Type="Decimal" Nullable="false" />
+          <Property Name="gorevsayisi" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="yayin" Relationship="TV.yayinsorumlu" FromRole="sorumlu" ToRole="yayin" />
+          <Property Name="yayinid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="kanalyayin">
+          <End Type="TV.kanal" Role="kanal" Multiplicity="1" />
+          <End Type="TV.yayin" Role="yayin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kanal">
+              <PropertyRef Name="kanalid" />
+            </Principal>
+            <Dependent Role="yayin">
+              <PropertyRef Name="kanalid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="yayinsorumlu">
+          <End Type="TV.yayin" Role="yayin" Multiplicity="1" />
+          <End Type="TV.sorumlu" Role="sorumlu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yayin">
+              <PropertyRef Name="yayinid" />
+            </Principal>
+            <Dependent Role="sorumlu">
+              <PropertyRef Name="yayinid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TVStoreContainer" CdmEntityContainer="TVContainer">
+    <EntitySetMapping Name="kanal">
+      <EntityTypeMapping TypeName="IsTypeOf(TV.kanal)">
+        <MappingFragment StoreEntitySet="kanal">
+          <ScalarProperty Name="kanalid" ColumnName="kanalid" />
+          <ScalarProperty Name="kanaladi" ColumnName="kanaladi" />
+          <ScalarProperty Name="ciro" ColumnName="ciro" />
+          <ScalarProperty Name="adres" ColumnName="adres" />
+          <ScalarProperty Name="reyting" ColumnName="reyting" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="yayin">
+      <EntityTypeMapping TypeName="IsTypeOf(TV.yayin)">
+        <MappingFragment StoreEntitySet="yayin">
+          <ScalarProperty Name="yayinid" ColumnName="yayinid" />
+          <ScalarProperty Name="yayinadi" ColumnName="yayinadi" />
+          <ScalarProperty Name="yayintarihi" ColumnName="yayintarihi" />
+          <ScalarProperty Name="reyting" ColumnName="reyting" />
+          <ScalarProperty Name="kanalid" ColumnName="kanalid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sorumlu">
+      <EntityTypeMapping TypeName="IsTypeOf(TV.sorumlu)">
+        <MappingFragment StoreEntitySet="sorumlu">
+          <ScalarProperty Name="sorumluid" ColumnName="sorumluid" />
+          <ScalarProperty Name="adsoyad" ColumnName="adsoyad" />
+          <ScalarProperty Name="gorevi" ColumnName="gorevi" />
+          <ScalarProperty Name="maas" ColumnName="maas" />
+          <ScalarProperty Name="gorevsayisi" ColumnName="gorevsayisi" />
+          <ScalarProperty Name="yayinid" ColumnName="yayinid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

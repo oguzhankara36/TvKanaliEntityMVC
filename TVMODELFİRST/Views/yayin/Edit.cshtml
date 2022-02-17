@@ -1,0 +1,148 @@
+﻿@model TVMODELFİRST.yayin
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KARA TV KANALI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/TVTEMA/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/TVTEMA/css/slick.css" type="text/css" />
+    <link rel="stylesheet" href="~/TVTEMA/css/templatemo-style.css">
+    <!--
+
+    TemplateMo 560 Astro Motion
+
+    https://templatemo.com/tm-560-astro-motion
+
+    -->
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="~/TVTEMA/video/gfp-astro-timelapse.mp4" type="video/mp4">
+    </video>
+    <div class="page-container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="cd-slider-nav">
+                        <nav class="navbar navbar-expand-lg" id="tm-nav">
+                            <a class="navbar-brand" href="#">KARA TV</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-supported-content" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbar-supported-content" style="margin-right:20%;">
+                                <center>
+                                    <ul class="navbar-nav mb-2 mb-lg-0">
+                                        <li class="nav-item">
+                                            <a class="nav-link" @Html.ActionLink("Kanallar", "Index", "kanal")</a>
+                                            <div class="circle"></div>
+                                        </li>
+                                        <li class="nav-item selected">
+                                            <a class="nav-link" aria-current="page" @Html.ActionLink("Yayınlar", "Index", "yayin")</a>
+                                            <div class="circle"></div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" @Html.ActionLink("Sorumlular", "Index", "sorumlu")</a>
+                                            <div class="circle"></div>
+                                        </li>
+                                    </ul>
+                                </center>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid tm-content-container">
+            <ul class="cd-hero-slider mb-0 py-5">
+                <li data-page-no="1" class="px-3">
+                    <div class="position-relative page-width-1 page-right tm-border-top tm-border-bottom">
+                        <div class="circle intro-circle-1"></div>
+                        <div class="circle intro-circle-2"></div>
+                        <div class="circle intro-circle-3"></div>
+                        <div class="circle intro-circle-4"></div>
+                        <div class="tm-bg-dark content-pad" style="color:white;">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal">
+                                    <hr />
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.yayinid)
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.yayinadi, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.yayinadi, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.yayinadi, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.yayintarihi, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.yayintarihi, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.yayintarihi, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.reyting, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.reyting, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.reyting, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.kanalid, "kanalid", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownList("kanalid", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.kanalid, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="KAYDET" class="btn btn-warning" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div>
+                                @Html.ActionLink("Listeye Geri Dön", "Index","yayin")
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Preloader, https://ihatetomatoes.net/create-custom-preloading-screen/ -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <script src="~/TVTEMA/js/jquery-3.5.1.min.js"></script>
+    <script src="~/TVTEMA/js/bootstrap.min.js"></script>
+    <script src="~/TVTEMA/js/slick.js"></script>
+    <script src="~/TVTEMA/js/templatemo-script.js"></script>
+</body>
+</html>
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
